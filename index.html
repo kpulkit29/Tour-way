@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+<title>Tour</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+ <link rel="stylesheet" href="stylesheet/style.css"> 
+</head>
+<body>
+  
+    <header>
+        <h1><img src="images/send.svg" style="width:80px;height:80px"> Tour way</h1>
+    </header>
+    <div ng-controller="control1">
+    <md-nav-bar
+    md-no-ink-bar="disableInkBar"
+    md-selected-nav-item="currentNavItem"
+    nav-bar-aria-label="navigation links">
+    <md-nav-item md-nav-click="change_style('1')" name="page1" style="width:50%;" class="text-center">
+            Home Page
+          </md-nav-item>
+          <md-nav-item md-nav-click="change_style('2')" name="page2" style="width:50%;" class="text-center">
+            Manage tours
+          </md-nav-item>
+    
+  </md-nav-bar></div>
+  
+  <!--the content of page 1 -->
+  <div ng-controller="control1" ng-hide="tab_switch">
+  <div class="row">
+       <div class="col">
+         <form ng-submit="new()">
+            <md-input-container>
+                <label>Enter new waypoint</label>
+                <input ng-model="added_place">
+              </md-input-container>
+              <md-button class="md-raised md-primary" type="submit">Add</md-button>
+         </form>
+          
+         <md-list>
+          <md-subheader class="md-no-sticky">Waypoints</md-subheader>
+          <md-list-item class="md-3-line" ng-repeat="item in places" ng-click="null">
+            <img src="images/placeholder.svg" class="md-avatar"  /> 
+            <div class="md-list-item-text" layout="column">
+              {{item}}
+            </div>
+          </md-list-item><md-list>
+
+       </div>
+       <div class="col-6">
+         <div id="map" style="width:100%;height:100vh;"></div>
+       </div>
+       <div class="col">
+         <p>Click to view the waypoints</p>
+         <md-list>
+            <md-subheader class="md-no-sticky">My tours</md-subheader>
+            <md-list-item class="md-3-line" ng-repeat="item in tours" ng-click="display(item.points)">
+              <img src="images/placeholder.svg" class="md-avatar"  /> 
+              <div class="md-list-item-text" layout="column">
+                {{item.title}}
+              </div>
+            </md-list-item><md-list>
+       </div>
+      </div>
+    </div>
+  <!--the content of page 2-->
+   <!-- <div ng-app="demo">
+        <div ng-controller="DemoController" class="row">
+          <div ng-repeat="list in model" class="col-sm-6">
+            <div class="panel panel-info">
+              <div class="panel-heading"><h3 class="panel-title">List {{$index+1}}</h3></div>
+              <div class="panel-body">
+                <ul dnd-list dnd-drop="callback({targetList: list, targetIndex: index})">
+                  <li ng-repeat="item in list"
+                      dnd-draggable="null" dnd-callback="onDrop(list, $index, targetList, targetIndex)">
+                    {{item.labelFunc($index)}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>-->
+<div ng-controller="control2" ng-hide="!tab_switch">
+    <form ng-submit="new_tour()">
+        <md-input-container  style="width:80%;">
+            <label>Enter new tour name</label>
+            <input ng-model="added_tour">
+          </md-input-container>
+          <md-button class="md-raised md-primary" type="submit">Add</md-button>
+     </form>
+  <div class="row">
+      <div class="col-sm-4">
+        <p class="text-wrap">Drag the wayoints to you respective tour</p>
+          <ul dnd-list="places">
+              <li ng-repeat="item in places"
+                  dnd-draggable="item"
+                  dnd-moved="places.splice($index, 1)"
+                  dnd-effect-allowed="move"
+                  >
+                  {{item}}
+              </li>
+          </ul>
+      </div>
+       <div class="col-sm-8">
+          <ul class="list-unstyled">
+              <li ng-repeat="list in tours">
+                <h1>{{list.title}}</h1>
+                  <ul dnd-list="list.points" dnd-drop="dropCall(index,item,list.title)">
+                      <li ng-repeat="item in list.points track by $index"
+                          dnd-draggable="item"
+                          dnd-moved="list.points.splice($index, 1)"
+                          dnd-effect-allowed="move"
+                          
+                          >
+                          <p>{{item}}<a style="float:right" ng-click="delete(list.title,item)">X</a></p>
+                      </li>
+                  </ul>
+              </li>
+            </ul>
+       </div>
+  </div>
+  
+
+   
+     
+ 
+</div>
+    <!--- -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<!-- <script src="bower_components/angular-dragdrop/src/angular-dragdrop.min.js"></script> -->
+<script src="controller/dnd.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+<script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAWvrSe3zwkOBYohBVcvgHkNvRU2OFHMdo&libraries=places'></script>
+<script src="controller/allc.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+ul[dnd-list] {
+    min-height: 42px;
+    padding: 0;
+  }
+  
+  ul[dnd-list] > li {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    padding: 10px 15px;
+  }
+  
+  ul[dnd-list] > li.dndDraggingSource {
+    display: none;
+  }
+  
+  ul[dnd-list] > li.dndPlaceholder {
+    background-color: #ddd;
+    min-height: 42px;
+  }
+  
+  .panel .panel-body {
+    padding: 0;
+  }
+header{
+    background:	#8A2BE2;
+    height:15%;
+    padding: 2%;
+    color:white;
+    
+}  
+row > div {
+    margin-top:10px;
+    padding: 20px;
+    outline: 2px solid #ccc;
+    outline-offset: -10px;
+    -moz-outline-radius: 10px;
+    -webkit-outline-radius: 10px;
+ }
+ md-nav-bar{
+   margin-bottom: 20px;
+ }
+body{
+    width:100%;
+}
+button{
+  background: #8A2BE2;
+  color: white;
+}
+.col-6{
+  padding:10px;
+}
+md-card{
+  width: 20%;
+  height: 100px;
+}
